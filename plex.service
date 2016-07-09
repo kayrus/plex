@@ -1,0 +1,25 @@
+[Unit]
+Description=Plex Media Server
+After=docker.service
+Requires=docker.service
+
+[Service]
+Environment=MEDIA_LIB=/home/user/media
+Environment=CONFIG_DIR=/var/lib/plex
+Environment=DOCKER_IMAGE=kayrus/plex
+Environment=PLEX_INT_PORT=32400
+Environment=PLEX_EXT_PORT=32400
+#Restart=always
+#RestartSec=5
+# Remove old Plex container
+ExecStarPre=-/usr/bin/docker rm plex
+ExecStart=/usr/bin/docker run --name plex --hostname plex --rm -p ${PLEX_EXT_PORT}:${PLEX_INT_PORT} -v ${CONFIG_DIR}:/var/lib/plex -v ${MEDIA_LIB}:/media ${DOCKER_IMAGE}
+# Fix foreign network which requires Plex login/signup
+ExecStartPost=/sbin/iptables -t nat -I POSTROUTING -o docker0 -p tcp -m tcp --dport ${PLEX_INT_PORT} -j MASQUERADE
+ExecStopPost=-/sbin/iptables -t nat -D POSTROUTING -o docker0 -p tcp -m tcp --dport ${PLEX_INT_PORT} -j MASQUERADE
+ExecStop=/usr/bin/docker stop plex
+# Remove pidfile after stop which prevents Plex server start
+ExecStopPost=/bin/rm -f ${CONFIG_DIR}/Library/Application\x20Support/Plex\x20Media\x20Server/plexmediaserver.pid
+
+[Install]
+WantedBy=multi-user.target
