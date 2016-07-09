@@ -15,6 +15,10 @@ RUN useradd -r -d /var/lib/plex -s /sbin/nologin plex
 RUN locale-gen en_US.UTF-8
 # Fix performance issues related to 6 channels processing
 RUN sed -i 's/name="audio.channels" value="6"/name="audio.channels" value="2"/' /opt/plex/Application/Resources/Profiles/Web.xml
+# This hack is a workaround for this issue http://forums.plex.tv/discussion/comment/1216192
+RUN mv /opt/plex/Application/Resources/Plex\ Transcoder /opt/plex/Application/Resources/Plex\ Transcoder_
+ADD magic.sh /opt/plex/Application/Resources/
+RUN mv /opt/plex/Application/Resources/magic.sh /opt/plex/Application/Resources/Plex\ Transcoder
 # Start container using plex user
 USER plex
 VOLUME ["/var/lib/plex","/media"]
