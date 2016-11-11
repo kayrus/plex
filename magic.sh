@@ -55,4 +55,4 @@ for arg in "$@"; do
     args[$i]=$(printf "%q" "$arg")
 done
 set -- "${args[@]}"
-eval "/opt/plex/Application/Resources/Plex\ Transcoder_ $@"
+eval "/opt/plex/Application/Plex\ Transcoder_ $@"

@@ -45,6 +45,10 @@ docker run --name plex --rm -p ${PLEX_OUT_PORT}:${PLEX_INT_PORT} -v ${CONFIG_DIR
 sudo iptables -t nat -I POSTROUTING -o docker0 -p tcp -m tcp --dport ${PLEX_INT_PORT} -j MASQUERADE
 ```
 
+Also it is necessary to set `allowedNetworks="172.17.42.1/255.255.255.0"` inside plex's config file `Library/Application Support/Plex Media Server/Preferences.xml`
+
+See more details about the advanced server settings here: https://support.plex.tv/hc/en-us/articles/201105343
+
 ### systemd
 
 `plex.service` already contains all the necessary commands to run plex. Just place this file into the `/etc/systemd/system/` directory, modify its environment variables, run `sudo systemctl daemon-reload` and start plex:
@@ -64,10 +68,10 @@ ${CONFIG_DIR}/Library/Application Support/Plex Media Server/Codecs/ecd8c57-1099-
 You can download them manually in case when you don't have internet access:
 
 ```sh
-wget https://downloads.plex.tv/codecs/ecd8c57-1099/linux-annapurna-arm7/libh264_decoder.so
-wget https://downloads.plex.tv/codecs/ecd8c57-1099/linux-annapurna-arm7/libac3_decoder.so
-wget https://downloads.plex.tv/codecs/ecd8c57-1099/linux-annapurna-arm7/libaac_decoder.so
-wget https://downloads.plex.tv/codecs/ecd8c57-1099/linux-annapurna-arm7/libaac_encoder.so
+export PLUGIN_BUILD=5a2d9a2-1127
+for codec in libh264_decoder libac3_decoder libaac_decoder libaac_encoder libmpeg4_decoder libmpeg2video_decoder liblibmp3lame_encoder liblibx264_encoder; do
+  wget https://downloads.plex.tv/codecs/${PLUGIN_BUILD}/linux-annapurnatrans-arm7/${codec}.so
+done
 ```
 
 ### Performance issues on slow ARMv7 CPUs
