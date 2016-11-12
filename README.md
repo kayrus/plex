@@ -45,7 +45,7 @@ docker run --name plex --rm -p ${PLEX_OUT_PORT}:${PLEX_INT_PORT} -v ${CONFIG_DIR
 sudo iptables -t nat -I POSTROUTING -o docker0 -p tcp -m tcp --dport ${PLEX_INT_PORT} -j MASQUERADE
 ```
 
-Also it is necessary to set `allowedNetworks="172.17.42.1/255.255.255.0"` inside plex's config file `Library/Application Support/Plex Media Server/Preferences.xml`
+Also it is necessary to set `allowedNetworks="172.17.42.1/255.255.255.0"` (or even `disableRemoteSecurity="1"`) inside plex's config file `Library/Application Support/Plex Media Server/Preferences.xml`
 
 See more details about the advanced server settings here: https://support.plex.tv/hc/en-us/articles/201105343
 
