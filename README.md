@@ -74,6 +74,15 @@ for codec in libh264_decoder libac3_decoder libaac_decoder libaac_encoder libmpe
 done
 ```
 
+For amd64:
+
+```sh
+export PLUGIN_BUILD=5a2d9a2-1127
+for codec in libh264_decoder libac3_decoder libaac_decoder libaac_encoder libmpeg4_decoder libmpeg2video_decoder liblibmp3lame_encoder liblibx264_encoder; do
+  wget https://downloads.plex.tv/codecs/${PLUGIN_BUILD}/linux-ubuntu-x86_64/${codec}.so
+done
+```
+
 ### Performance issues on slow ARMv7 CPUs
 
 Plex since v1.0.0 has a default profile for browsers which doesn't downmix 5.1 (6 channels) to stereo (2 channels). This causes performance issues when CPU encodes 6 channels instead of 2.
