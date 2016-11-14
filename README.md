@@ -69,7 +69,7 @@ You can download them manually in case when you don't have internet access:
 
 ```sh
 export PLUGIN_BUILD=5a2d9a2-1127
-for codec in libh264_decoder libac3_decoder libaac_decoder libaac_encoder libmpeg4_decoder libmpeg2video_decoder liblibmp3lame_encoder liblibx264_encoder; do
+for codec in libh264_decoder libac3_decoder libmp3_decoder libaac_decoder libaac_encoder libmpeg4_decoder libmpeg2video_decoder liblibmp3lame_encoder liblibx264_encoder; do
   wget https://downloads.plex.tv/codecs/${PLUGIN_BUILD}/linux-annapurnatrans-arm7/${codec}.so
 done
 ```
@@ -78,7 +78,7 @@ For amd64:
 
 ```sh
 export PLUGIN_BUILD=5a2d9a2-1127
-for codec in libh264_decoder libac3_decoder libaac_decoder libaac_encoder libmpeg4_decoder libmpeg2video_decoder liblibmp3lame_encoder liblibx264_encoder; do
+for codec in libh264_decoder libac3_decoder libmp3_decoder libaac_decoder libaac_encoder libmpeg4_decoder libmpeg2video_decoder liblibmp3lame_encoder liblibx264_encoder; do
   wget https://downloads.plex.tv/codecs/${PLUGIN_BUILD}/linux-ubuntu-x86_64/${codec}.so
 done
 ```
