@@ -62,14 +62,14 @@ sudo systemctl start plex
 Plex automatically downloads codecs and stores them inside `${CONFIG_DIR}/Library/Application Support/Plex Media Server/Codecs/ecd8c57-1099-linux-annapurna-arm7` directory, i.e.:
 
 ```sh
-${CONFIG_DIR}/Library/Application Support/Plex Media Server/Codecs/ecd8c57-1099-linux-annapurna-arm7/libh264_decoder.so
+${CONFIG_DIR}/Library/Application Support/Plex Media Server/Codecs/b077134-1269-linux-annapurna-arm7/libh264_decoder.so
 ```
 
 You can download them manually in case when you don't have internet access:
 
 ```sh
-export PLUGIN_BUILD=5a2d9a2-1127
-for codec in libh264_decoder libac3_decoder libmp3_decoder libaac_decoder libaac_encoder libmpeg4_decoder libmpeg2video_decoder liblibmp3lame_encoder liblibx264_encoder; do
+export PLUGIN_BUILD=b077134-1269
+for codec in libhevc_decoder libh264_decoder libdca_decoder libac3_decoder libmp3_decoder libaac_decoder libaac_encoder libmpeg4_decoder libmpeg2video_decoder liblibmp3lame_encoder liblibx264_encoder liblibhevc_encoder; do
   wget https://downloads.plex.tv/codecs/${PLUGIN_BUILD}/linux-annapurnatrans-arm7/${codec}.so
 done
 ```
@@ -77,8 +77,8 @@ done
 For amd64:
 
 ```sh
-export PLUGIN_BUILD=5a2d9a2-1127
-for codec in libh264_decoder libac3_decoder libmp3_decoder libaac_decoder libaac_encoder libmpeg4_decoder libmpeg2video_decoder liblibmp3lame_encoder liblibx264_encoder; do
+export PLUGIN_BUILD=b077134-1269
+for codec in libhevc_decoder libh264_decoder libdca_decoder libac3_decoder libmp3_decoder libaac_decoder libaac_encoder libmpeg4_decoder libmpeg2video_decoder liblibmp3lame_encoder liblibx264_encoder liblibhevc_encoder; do
   wget https://downloads.plex.tv/codecs/${PLUGIN_BUILD}/linux-ubuntu-x86_64/${codec}.so
 done
 ```
