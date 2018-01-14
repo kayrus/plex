@@ -6,13 +6,15 @@ Requires=docker.service
 [Service]
 Environment=MEDIA_LIB=/home/user/media
 Environment=CONFIG_DIR=/var/lib/plex
-Environment=DOCKER_IMAGE=kayrus/plex
+Environment=DOCKER_IMAGE=kayrus/plex-amd64:1.10
 Environment=PLEX_INT_PORT=32400
-Environment=PLEX_EXT_PORT=32400
-#Restart=always
-#RestartSec=5
+Environment=PLEX_EXT_PORT=127.0.0.1:32400
+Restart=always
+PermissionsStartOnly=true
+RestartSec=5
 # Remove old Plex container
-ExecStarPre=-/usr/bin/docker rm plex
+ExecStartPre=-/usr/bin/docker rm plex
+ExecStartPre=/usr/bin/install -d -m 0755 -o 999 -g 999 ${CONFIG_DIR}
 ExecStart=/usr/bin/docker run --name plex --hostname plex --rm -p ${PLEX_EXT_PORT}:${PLEX_INT_PORT} -v ${CONFIG_DIR}:/var/lib/plex -v ${MEDIA_LIB}:/media ${DOCKER_IMAGE}
 # Fix foreign network which requires Plex login/signup
 ExecStartPost=/sbin/iptables -t nat -I POSTROUTING -o docker0 -p tcp -m tcp --dport ${PLEX_INT_PORT} -j MASQUERADE
